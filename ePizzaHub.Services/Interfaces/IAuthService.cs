@@ -11,6 +11,6 @@ namespace ePizzaHub.Services.Interfaces
     {
         bool CreateUser(User user, string password, string role);
         User AuthenticateUser(string username, string password);
-        void SignOut();
+        bool SignOut();
     }
 }

@@ -1,7 +1,12 @@
+using ePizzaHub.Services.Configuration;
+using ePizzaHub.UI.Helpers.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+ConfigureDependencies.ConfigureService(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
@@ -19,6 +24,12 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
+
+app.MapControllerRoute(
+            name: "areas",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+          );
 
 app.MapControllerRoute(
     name: "default",

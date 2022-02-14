@@ -1,4 +1,5 @@
-﻿using ePizzaHub.WebUI.Models;
+﻿using ePizzaHub.Services.Interfaces;
+using ePizzaHub.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +8,18 @@ namespace ePizzaHub.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ICatalogService _catalogService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService)
         {
             _logger = logger;
+            _catalogService = catalogService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var data = _catalogService.GetItems();
+            return View(data);
         }
 
         public IActionResult Privacy()
