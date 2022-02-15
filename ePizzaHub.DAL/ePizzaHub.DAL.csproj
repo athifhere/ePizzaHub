@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ePizzaHub.Entities\ePizzaHub.Entities.csproj" />
+    <ProjectReference Include="..\ePizzaHub.Models\ePizzaHub.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using ePizzaHub.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
-namespace ePizzaHub.DAL.Implementaions
+namespace ePizzaHub.DAL.Implementations
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
