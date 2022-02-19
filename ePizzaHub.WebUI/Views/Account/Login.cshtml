@@ -24,21 +24,23 @@
             <div class="form-group">
                 <input type="submit" value="Login" class="btn btn-primary" />
             </div>
-            @if(flag)
-            {
-                <span class="userAdded">User added susccessfully!</span>
-            }
         </form>
     </div>
+    @if (flag)
+    {
+        <div class="userAdded">User added successfully!</div>
+    }
 </div>
 
 <style>
     .userAdded {
-        color:green;
-        font-size:40px;
+        color: green;
+        font-size: 40px;
     }
 </style>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }
