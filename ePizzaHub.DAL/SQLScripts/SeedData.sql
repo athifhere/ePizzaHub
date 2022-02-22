@@ -1,4 +1,12 @@
 ﻿GO
+SET IDENTITY_INSERT [dbo].[AspNetRoles] ON
+GO
+INSERT [dbo].[AspNetRoles] ([Id], [Description], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (1, 'Admin', 'Admin', 'ADMIN', '321312')
+GO
+INSERT [dbo].[AspNetRoles] ([Id], [Description], [Name], [NormalizedName], [ConcurrencyStamp]) VALUES (2, 'User', 'User', 'USER', '321312')
+GO
+SET IDENTITY_INSERT [dbo].[AspNetRoles] OFF
+GO
 SET IDENTITY_INSERT [dbo].[Categories] ON
 GO
 INSERT [dbo].[Categories] ([Id], [Name], [Description]) VALUES (1, N'Pizza', N'Pizza')
