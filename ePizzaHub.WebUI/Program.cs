@@ -1,11 +1,33 @@
+using ePizzaHub.Models;
 using ePizzaHub.Services.Configuration;
 using ePizzaHub.UI.Helpers.Services;
+using Serilog;
+using WebMarkupMin.AspNetCore6;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//logging
+builder.Host.UseSerilog((ctx, lc) =>
+    lc.WriteTo.Console()
+    .ReadFrom.Configuration(ctx.Configuration));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.Configure<RazorPayConfig>(builder.Configuration.GetSection("RazorPayConfig"));
 builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+builder.Services.AddWebMarkupMin(options =>
+{
+    options.AllowMinificationInDevelopmentEnvironment = true;
+    options.AllowCompressionInDevelopmentEnvironment = true;
+    options.DisablePoweredByHttpHeaders = true;
+}).AddHtmlMinification(options =>
+{
+    options.MinificationSettings.RemoveRedundantAttributes = true;
+    options.MinificationSettings.MinifyInlineJsCode = true;
+    options.MinificationSettings.MinifyInlineCssCode = true;
+    options.MinificationSettings.MinifyEmbeddedJsonData = true;
+    options.MinificationSettings.MinifyEmbeddedCssCode = true;
+}).AddHttpCompression();
 ConfigureDependencies.ConfigureService(builder.Services, builder.Configuration);
 
 var app = builder.Build();
@@ -19,7 +41,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        const int durationInSeconds = 60 * 60 * 24 * 7;
+        ctx.Context.Response.Headers["cache-control"] =
+            "public, max-age=" + durationInSeconds;
+    }
+});
+app.UseWebMarkupMin();
 
 app.UseRouting();
 

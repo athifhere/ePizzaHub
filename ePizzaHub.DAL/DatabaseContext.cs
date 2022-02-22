@@ -24,7 +24,7 @@ namespace ePizzaHub.DAL
         public DbSet<ItemType> ItemTypes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-
+        public DbSet<PaymentDetails> PaymentDetails { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -18,6 +18,16 @@ namespace ePizzaHub.WebUI.Controllers
 
         public IActionResult Index()
         {
+            try
+            {
+                int x = 0, y = 3;
+                int z = y / x;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+
             var data = _catalogService.GetItems();
             return View(data);
         }

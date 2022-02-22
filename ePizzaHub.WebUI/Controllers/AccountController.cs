@@ -12,6 +12,11 @@ namespace ePizzaHub.WebUI.Controllers
         {
             _authService = authService;
         }
+
+        public IActionResult UnAuthorize()
+        {
+            return View();
+        }
         public IActionResult Login()
         {
             if (TempData["flag"] != null)
@@ -29,18 +34,37 @@ namespace ePizzaHub.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginModel model)
+        public IActionResult Login(LoginModel model, string? returnurl)
         {
+
+            if (TempData["flag"] != null)
+            {
+                if ((bool)TempData["flag"] == true)
+                {
+                    ViewBag.flag = true;
+                }
+            }
+            else
+            {
+                ViewBag.flag = false;
+            }
             if (ModelState.IsValid)
             {
                 User user = _authService.AuthenticateUser(model.Email, model.Password);
-                if (user.Roles.Contains("Admin"))
+                if (user != null)
                 {
-                    return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
-                }
-                else if (user.Roles.Contains("User"))
-                {
-                    return RedirectToAction("Index", "Dashboard", new { area = "User" });
+                    if (!string.IsNullOrEmpty(returnurl))
+                        return Redirect(returnurl);
+
+
+                    if (user.Roles.Contains("Admin"))
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
+                    }
+                    else if (user.Roles.Contains("User"))
+                    {
+                        return RedirectToAction("Index", "Dashboard", new { area = "User" });
+                    }
                 }
             }
             return View();

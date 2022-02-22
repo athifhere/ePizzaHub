@@ -1,6 +1,7 @@
 ﻿using ePizzaHub.Entities;
 using ePizzaHub.Models;
 using ePizzaHub.Services.Interfaces;
+using ePizzaHub.UI.Helpers;
 using ePizzaHub.UI.Helpers.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -49,6 +50,11 @@ namespace ePizzaHub.WebUI.Controllers
         public IActionResult Index()
         {
             CartModel cart = _cartService.GetCartDetails(CartId);
+            if(CurrentUser != null && cart != null)
+            {
+                TempData.Set("Cart", cart);
+                _cartService.UpdateCart(cart.Id, CurrentUser.Id);
+            }
             return View(cart);
         }
 
@@ -95,7 +101,7 @@ namespace ePizzaHub.WebUI.Controllers
         [HttpPost]
         public IActionResult Checkout(Address address)
         {
-            //TempData.Set("Address", address);
+            TempData.Set("Address", address);
             return RedirectToAction("Index", "Payment");
         }
     }

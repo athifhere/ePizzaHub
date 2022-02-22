@@ -34,6 +34,9 @@ namespace ePizzaHub.Services.Configuration
             services.AddScoped<IRepository<Category>, Repository<Category>>();
             services.AddScoped<IRepository<Cart>, Repository<Cart>>();
             services.AddScoped<IRepository<CartItem>, Repository<CartItem>>();
+            services.AddScoped<IRepository<Order>, Repository<Order>>();
+            services.AddScoped<IRepository<OrderItem>, Repository<OrderItem>>();
+            services.AddScoped<IRepository<PaymentDetails>, Repository<PaymentDetails>>();
 
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -41,6 +44,8 @@ namespace ePizzaHub.Services.Configuration
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICatalogService, CatalogService>();
             services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IPaymentService, PaymentService>();
         }
     }
 }
