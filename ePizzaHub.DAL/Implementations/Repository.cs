@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 namespace ePizzaHub.DAL.Implementations
 {
+    //Repository pattern
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected DbContext _db;
